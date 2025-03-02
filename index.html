@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фоточке</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .photo-container {
+            width: 45%;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .photo {
+            width: 100%;
+            border-radius: 25px;
+            border: 4px dashed white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo:hover {
+            transform: scale(1.05);
+        }
+
+        @media (min-width: 992px) {
+            .photo-container {
+                width: 18%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gallery">
+    </div>
+
+    <script>
+        const gallery = document.querySelector('.gallery');
+
+        const folderMapping = {
+            1: 'SkullFlower',
+            2: 'SharpTongue',
+            3: 'SignetRing',
+            4: 'BunnyMuffin',
+            5: 'LoveCandle',
+            6: 'DurovsCap',
+            7: 'HexPot',
+            8: 'SpyAgaric',
+            9: 'HypnoLollipop',
+            10: 'LovePotion',
+            11: 'EvilEye',
+            12: 'JesterHat',
+            13: 'StarNotepad',
+            14: 'ToyBear',
+            15: 'MagicPotion',
+            16: 'EternalCandle',
+            17: 'LolPop',
+            18: 'TrappedHeart',
+            19: 'SnowMittens',
+            20: 'JingleBells',
+            21: 'MadPumpkin',
+            22: 'SantaHat',
+            23: 'LunarSnake',
+            24: 'EternalRose',
+            25: 'FlyingBroom',
+            26: 'PerfumeBottle',
+            27: 'PreciousPeach',
+            28: 'HomemadeCake',
+            29: 'WitchHat',
+            30: 'ScaredCat',
+            31: 'PlushPepe',
+            32: 'PartySparkler',
+            33: 'AstralShard',
+            34: 'SwissWatch',
+            35: 'CrystalBall',
+            36: 'IonGem',
+            37: 'KissedFrog',
+            38: 'JellyBunny',
+            39: 'GenieLamp',
+            40: 'HangingStar',
+            41: 'MiniOscar',
+            42: 'DiamondRing',
+            43: 'BerryBox',
+            44: 'DeskCalendar',
+            45: 'VintageCigar',
+            46: 'B-DayCandle',
+            47: 'VoodooDoll',
+            48: 'CookieHeart',
+            49: 'LootBag',
+            50: 'SpicedWine',
+            51: 'GingerCookie'
+        };
+
+
+        async function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = () => resolve(null);
+                img.src = src;
+            });
+        }
+
+        async function createGallery() {
+            for (let i = 1; i <= 51; i++) {
+                const jpgSrc = `${i}.jpg`;
+                const pngSrc = `${i}.png`;
+
+                let img = await loadImage(jpgSrc);
+
+                if (!img) {
+                    img = await loadImage(pngSrc);
+                }
+
+                if (img) {
+                    const photoContainer = document.createElement('div');
+                    photoContainer.classList.add('photo-container');
+
+                    const folder = folderMapping[i]; 
+                    const link = document.createElement('a');
+
+                    if (folder) {
+                        link.href = `${folder}/index.html`; 
+                    } else {
+                        link.href = '#'; 
+                    }
+
+                    link.style.display = 'block'; 
+
+                    img.classList.add('photo');
+
+                    link.appendChild(img);
+                    photoContainer.appendChild(link);
+                    gallery.appendChild(photoContainer);
+                }
+            }
+        }
+
+        createGallery();
+    </script>
+
+</body>
+</html>
